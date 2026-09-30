@@ -54,8 +54,11 @@ dkms.conf
 # debug information files
 *.dwo
 
-# Ignore compiled programs in the weekly folders
-week-*/*
-!week-*/*.c
-!week-*/*.h
-!week-*/.gitkeep
+# Ignore compiled programs in the weekly folders (keep sources and folders)
+week-*/**
+!week-*/**/
+!week-*/**/*.c
+!week-*/**/*.h
+!week-*/**/*.md
+!week-*/**/.gitkeep
+*.dSYM/
