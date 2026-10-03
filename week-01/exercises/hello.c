@@ -2,6 +2,6 @@
 
 int main(void)
 {
-    printf("Hello, cybersecurity!\n");
+    printf("Hello, world!\n");
     return 0;
 }
