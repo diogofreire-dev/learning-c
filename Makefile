@@ -1,14 +1,43 @@
-# Usage: make 01-basics/hello  (builds 01-basics/hello.c using the implicit rule)
+# Usage:
+#   make 01-basics/02-calc        builds 01-basics/02-calc.c into build/01-basics/02-calc
+#   make run/01-basics/02-calc    builds it and runs it
+#   make all                      builds every exercise
+#   make clean                    removes build/
 CC      = clang
 CFLAGS  = -std=c17 -Wall -Wextra -g -fsanitize=address,undefined
 LDFLAGS = -fsanitize=address,undefined
+BUILD   = build
 
-.PHONY: help clean
+# Every exercise, e.g. 01-basics/02-calc (the .c files without the extension)
+PROGS = $(patsubst %.c,%,$(wildcard [0-9][0-9]-*/*.c))
+RUNS  = $(addprefix run/,$(PROGS))
+
+# No built-in rules: otherwise make would build next to the source (cc file.c -o file)
+MAKEFLAGS += -r
+.SUFFIXES:
+
+.PHONY: help all clean $(PROGS) $(RUNS)
 help:
-	@echo "Build an exercise:  make 01-basics/hello"
+	@echo "Build an exercise:  make 01-basics/02-calc   (output in build/)"
+	@echo "Build and run it:   make run/01-basics/02-calc"
+	@echo "Build everything:   make all"
 	@echo "Remove binaries:    make clean"
 
-# Removes compiled programs (executables without an extension) from the topic folders
+all: $(PROGS)
+
+# Also removes binaries left next to the sources (e.g. built by the VS Code run button)
 clean:
+	rm -rf $(BUILD)
 	find [0-9][0-9]-* -type f -perm -u+x ! -name '*.*' -print -delete
 	find [0-9][0-9]-* -name '*.dSYM' -type d -prune -exec rm -rf {} +
+
+$(BUILD)/%: %.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) $< -o $@ $(LDFLAGS)
+
+# make 01-basics/02-calc → build/01-basics/02-calc
+$(PROGS): %: $(BUILD)/%
+
+# The leading - keeps make going if the program exits with an error code
+$(RUNS): run/%: $(BUILD)/%
+	-@./$<
