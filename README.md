@@ -10,7 +10,7 @@ Build a solid foundation in C (pointers and memory) so I can later understand As
 
 - [x] 01 – Basics: types, operators, control flow, functions, printf/scanf
 - [x] 02 – Arrays and strings, scope, the stack
-- [ ] 03 – Pointers
+- [x] 03 – Pointers
 - [ ] 04 – Memory: malloc/free, stack vs heap, leaks, AddressSanitizer
 - [ ] 05 – Structs, linked lists, argc/argv, file I/O
 - [ ] 06 – Mini-Project: a `hexdump` clone
@@ -26,6 +26,7 @@ From the repository root:
 make run/01-basics/00-hello     # build and run
 make 01-basics/00-hello         # only build
 ./build/01-basics/00-hello      # run an already built program
+make leaks/04-memory/05-leak    # check for memory leaks (built without sanitizers)
 make all                        # build every exercise
 make clean                      # remove build/
 ```
