@@ -14,7 +14,7 @@ Build a solid foundation in C (pointers and memory) so I can later understand As
 - [x] 04 – Memory: malloc/free, stack vs heap, leaks, AddressSanitizer
 - [x] 05 – Structs, linked lists, argc/argv, file I/O
 - [x] 06 – Mini-Project: a `hexdump` clone
-- [ ] 07 – Under the hood: `clang -S`, lldb, the stack frame, a buffer overflow
+- [x] 07 – Under the hood: `clang -S`, lldb, the stack frame, a buffer overflow
 
 Each folder has the exercises (`.c`), an `exercises.md` with the statements and a `notes.md`.
 
@@ -28,6 +28,8 @@ make run/05-structs-files/03-args ARGS="1 2 3"   # run with command-line argumen
 make 01-basics/00-hello         # only build
 ./build/01-basics/00-hello      # run an already built program
 make leaks/04-memory/05-leak    # check for memory leaks (built without sanitizers)
+make plain/01-basics/02-calc    # build and run without sanitizers (like a normal program)
+make asm/07-under-the-hood/01-asm-basics   # show the assembly (OPT=-O0 for no optimisation)
 make all                        # build every exercise
 make clean                      # remove build/
 ```
@@ -36,7 +38,8 @@ Compiled programs go to `build/` (ignored by git), so the topic folders only hav
 
 ## Next
 
-- Assembly x86-64 (Linux, via Docker or a VM — this Mac is arm64)
+- Assembly in depth: x86-64 (Linux, via Docker or a VM — this Mac is arm64) and ARM64
+- Grow the hexdump into a static malware triage tool (roadmap in `06-project-hexdump/project.md`)
 - Binary exploitation: pwn.college, OverTheWire, picoCTF
 
 ## Resources

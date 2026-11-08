@@ -3,6 +3,8 @@
 #   make run/01-basics/02-calc    builds it and runs it
 #   make run/05-structs-files/03-args ARGS="1 2 3"   runs it with command-line arguments
 #   make leaks/04-memory/05-leak  builds it without sanitizers and checks it for memory leaks
+#   make plain/01-basics/02-calc  builds and runs it without sanitizers (like a normal program)
+#   make asm/07-under-the-hood/01-asm-basics   shows the assembly (OPT=-O0 for no optimisation)
 #   make all                      builds every exercise
 #   make clean                    removes build/
 CC      = clang
@@ -14,17 +16,22 @@ BUILD   = build
 PROGS = $(patsubst %.c,%,$(wildcard [0-9][0-9]-*/*.c))
 RUNS  = $(addprefix run/,$(PROGS))
 LEAKS = $(addprefix leaks/,$(PROGS))
+PLAINS = $(addprefix plain/,$(PROGS))
+ASMS  = $(addprefix asm/,$(PROGS))
+OPT   = -O1
 
 # No built-in rules: otherwise make would build next to the source (cc file.c -o file)
 MAKEFLAGS += -r
 .SUFFIXES:
 
-.PHONY: help all clean $(PROGS) $(RUNS) $(LEAKS)
+.PHONY: help all clean $(PROGS) $(RUNS) $(LEAKS) $(PLAINS) $(ASMS)
 help:
 	@echo "Build an exercise:  make 01-basics/02-calc   (output in build/)"
 	@echo "Build and run it:   make run/01-basics/02-calc"
 	@echo "With arguments:     make run/05-structs-files/03-args ARGS=\"1 2 3\""
 	@echo "Check for leaks:    make leaks/04-memory/05-leak"
+	@echo "No sanitizers:      make plain/01-basics/02-calc"
+	@echo "Show the assembly:  make asm/07-under-the-hood/01-asm-basics [OPT=-O0]"
 	@echo "Build everything:   make all"
 	@echo "Remove binaries:    make clean"
 
@@ -56,3 +63,11 @@ $(RUNS): run/%: $(BUILD)/%
 # MallocStackLogging makes leaks show where each leaked block was allocated
 $(LEAKS): leaks/%: $(BUILD)/plain/%
 	-@MallocStackLogging=1 leaks --atExit -- ./$< $(ARGS)
+
+$(PLAINS): plain/%: $(BUILD)/plain/%
+	-@./$< $(ARGS)
+
+# Prints the assembly clang generates, without the directives that only matter to the
+# assembler/debugger (.cfi_*, .section, ...), so the instructions are easier to read
+$(ASMS): asm/%: %.c
+	@$(CC) -std=c17 $(OPT) -S $< -o - | grep -vE '^[[:space:]]*\.(cfi_|build_version|section|p2align|subsections_via_symbols|loh)'
