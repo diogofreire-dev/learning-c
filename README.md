@@ -11,7 +11,7 @@ Build a solid foundation in C (pointers and memory) so I can later understand As
 - [x] 01 – Basics: types, operators, control flow, functions, printf/scanf
 - [x] 02 – Arrays and strings, scope, the stack
 - [x] 03 – Pointers
-- [ ] 04 – Memory: malloc/free, stack vs heap, leaks, AddressSanitizer
+- [x] 04 – Memory: malloc/free, stack vs heap, leaks, AddressSanitizer
 - [ ] 05 – Structs, linked lists, argc/argv, file I/O
 - [ ] 06 – Mini-Project: a `hexdump` clone
 - [ ] 07 – Under the hood: `clang -S`, lldb, the stack frame, a buffer overflow
@@ -24,6 +24,7 @@ From the repository root:
 
 ```bash
 make run/01-basics/00-hello     # build and run
+make run/05-structs-files/03-args ARGS="1 2 3"   # run with command-line arguments
 make 01-basics/00-hello         # only build
 ./build/01-basics/00-hello      # run an already built program
 make leaks/04-memory/05-leak    # check for memory leaks (built without sanitizers)

@@ -1,6 +1,7 @@
 # Usage:
 #   make 01-basics/02-calc        builds 01-basics/02-calc.c into build/01-basics/02-calc
 #   make run/01-basics/02-calc    builds it and runs it
+#   make run/05-structs-files/03-args ARGS="1 2 3"   runs it with command-line arguments
 #   make leaks/04-memory/05-leak  builds it without sanitizers and checks it for memory leaks
 #   make all                      builds every exercise
 #   make clean                    removes build/
@@ -22,6 +23,7 @@ MAKEFLAGS += -r
 help:
 	@echo "Build an exercise:  make 01-basics/02-calc   (output in build/)"
 	@echo "Build and run it:   make run/01-basics/02-calc"
+	@echo "With arguments:     make run/05-structs-files/03-args ARGS=\"1 2 3\""
 	@echo "Check for leaks:    make leaks/04-memory/05-leak"
 	@echo "Build everything:   make all"
 	@echo "Remove binaries:    make clean"
@@ -49,8 +51,8 @@ $(PROGS): %: $(BUILD)/%
 
 # The leading - keeps make going if the program exits with an error code
 $(RUNS): run/%: $(BUILD)/%
-	-@./$<
+	-@./$< $(ARGS)
 
 # MallocStackLogging makes leaks show where each leaked block was allocated
 $(LEAKS): leaks/%: $(BUILD)/plain/%
-	-@MallocStackLogging=1 leaks --atExit -- ./$<
+	-@MallocStackLogging=1 leaks --atExit -- ./$< $(ARGS)
