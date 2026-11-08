@@ -9,7 +9,7 @@ Build a solid foundation in C (pointers and memory) so I can later understand As
 ## Plan (by topic)
 
 - [x] 01 – Basics: types, operators, control flow, functions, printf/scanf
-- [ ] 02 – Arrays and strings, scope, the stack
+- [x] 02 – Arrays and strings, scope, the stack
 - [ ] 03 – Pointers
 - [ ] 04 – Memory: malloc/free, stack vs heap, leaks, AddressSanitizer
 - [ ] 05 – Structs, linked lists, argc/argv, file I/O
