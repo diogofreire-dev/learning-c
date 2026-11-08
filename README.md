@@ -12,8 +12,8 @@ Build a solid foundation in C (pointers and memory) so I can later understand As
 - [x] 02 – Arrays and strings, scope, the stack
 - [x] 03 – Pointers
 - [x] 04 – Memory: malloc/free, stack vs heap, leaks, AddressSanitizer
-- [ ] 05 – Structs, linked lists, argc/argv, file I/O
-- [ ] 06 – Mini-Project: a `hexdump` clone
+- [x] 05 – Structs, linked lists, argc/argv, file I/O
+- [x] 06 – Mini-Project: a `hexdump` clone
 - [ ] 07 – Under the hood: `clang -S`, lldb, the stack frame, a buffer overflow
 
 Each folder has the exercises (`.c`), an `exercises.md` with the statements and a `notes.md`.
